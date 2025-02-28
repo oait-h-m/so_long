@@ -67,7 +67,7 @@ int	count_line(char *file_d, int *len)
 
 char	**add_map_to_string(int row, int col, char *file_d)
 {
-	char **map, (*s);
+	char	**map, (*s);
 	int i, (j), (fd);
 	fd = open(file_d, O_RDONLY);
 	map = malloc(sizeof(char *) * (row + 1));
@@ -94,21 +94,24 @@ char	**add_map_to_string(int row, int col, char *file_d)
 	return (map);
 }
 
-int check_name_of_arg(char *av)
+int	check_name_of_arg(char *av)
 {
 	if (ft_strlen(av) < 4)
-		return 0;
+		return (0);
 	while (*av != '.')
 		av++;
 	if (ft_strcmp(av, ".ber") != 0)
-		return 0;
-	return 1;
+		return (0);
+	return (1);
 }
+
 int	main(int ac, char **av)
 {
-	s_map	map;
+	t_map	map;
 	char	**test_map;
 
+	int y, (x);
+	y = 0, x = 0;
 	if (ac != 2)
 		return (0);
 	map.row = count_line(av[1], &map.col);
