@@ -97,6 +97,11 @@ int	is_player_valid(char **map)
 
 int	is_map_valid(char **map, int row, int col, char *av)
 {
+	char **cpy_map;
+	int x, (y);
+
+	x = 0;
+	y = 0;
 	if (!check_name_of_arg(av))
 		return 0;
 	else if (!is_wall_valid(map, row, col))
@@ -107,5 +112,14 @@ int	is_map_valid(char **map, int row, int col, char *av)
 		return (0);
 	else if (!is_player_valid(map))
 		return (0);
+	find_player(map, &x, &y);
+	cpy_map = map_copy(map, row);
+	flood_fill(cpy_map, y, x);
+	if (!check_map_after_flood_fill(cpy_map))
+	{
+		free_map(cpy_map);
+		return 0;
+	}
+	free_map(cpy_map);
 	return (1);
 }
