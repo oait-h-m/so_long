@@ -29,7 +29,7 @@ typedef struct c_map
 {
 	int	row;
 	int	col;
-}		s_map;
+}		t_map;
 
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, const char *s2);
@@ -45,5 +45,11 @@ int		is_player_valid(char **map);
 int		is_map_valid(char **map, int row, int col, char *av);
 int		check_name_of_arg(char *av);
 int		ft_strcmp(char *s1, char *s2);
+void	free_map(char **map);
+
+void	flood_fill(char **map, int x, int y);
+char	**map_copy(char **map, int rows);
+void	find_player(char **map, int *rows, int *columns);
+int		check_map_after_flood_fill(char **map);
 
 #endif
