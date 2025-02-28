@@ -14,7 +14,7 @@ NAME = so_long
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 
-SRC = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c  main.c
+SRC = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c libft/ft_strcmp.c  is_map_valid.c main.c
 
 OBJ = $(SRC:.c=.o)
 
