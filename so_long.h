@@ -52,5 +52,4 @@ char	**map_copy(char **map, int rows);
 void	find_player(char **map, int *rows, int *columns);
 int		check_map_after_flood_fill(char **map);
 
-
 #endif
