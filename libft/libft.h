@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
-#define LIBFT_H
+# define LIBFT_H
 
 char	**ft_split(char const *s, char c);
 int		ft_strcmp(char *s1, char *s2);
