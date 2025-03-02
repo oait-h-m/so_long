@@ -28,6 +28,15 @@ typedef struct c_map
 	int	col;
 }		t_map;
 
+typedef struct s_data
+{
+	void	*wall_img;
+	void	*player_img;
+	void	*coin_img;
+	void	*empty_space_img;
+}	t_data;
+
+
 void	free_map(char **map);
 int		count_char(char *s, int len);
 int		count_line(char *file_d, int *len);
