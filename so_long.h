@@ -21,4 +21,12 @@
 # include "libft/libft.h"
 # include "src/src.h"
 
+typedef struct s_data
+{
+	void	*wall_img;
+	void	*player_img;
+	void	*coin_img;
+	void	*empty_space_img;
+}t_data;
+
 #endif
