@@ -38,7 +38,10 @@ char	**add_map_to_double_array(char **map, int fd, int row, int col)
 		j = 0;
 		map[i] = malloc(sizeof(char) * col + 1);
 		if (!map[i])
+		{
+			free_map(map);
 			return (NULL);
+		}
 		s = get_next_line(fd);
 		while (j < col)
 		{
