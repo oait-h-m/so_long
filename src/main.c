@@ -12,66 +12,87 @@
 
 #include "src.h"
 
-char	**fun(t_map map, char **av)
+char	**check_map_is_valid(t_map map_coordinates, char **av)
 {
-	char	**test_map;
+	char	**map;
 
 	int y, (x);
 	y = 0;
 	x = 0;
-	map.row = count_line(av[1], &map.col);
-	test_map = add_map_to_string(map.row, map.col, av[1]);
-	if (is_map_valid(test_map, map.row, map.col, av[1]))
-		printf("map is valid. \n");
-	else
-	{
+	map_coordinates.row = count_line(av[1], &map_coordinates.col);
+	map = add_map_to_string(map_coordinates.row, map_coordinates.col, av[1]);
+	if (!is_map_valid(map, map_coordinates.row, map_coordinates.col, av[1]))
 		exit(1);
-		printf("map is not valid. \n");
-	}
-	return test_map;
+	return (map);
 }
 
-int	main(int ac, char **av)
+void	add_xpm_file_to_images(t_data *data, void *mlx)
 {
-	t_map	mmap;
-	t_data	data;
-	void	*mlx = NULL;
-	void	*win;
 	int img_height, img_width;
+	data->wall_img = mlx_xpm_file_to_image(mlx,
+			"/home/oait-h-m/cursus/so_long/src/wall.xpm", &img_width,
+			&img_height);
+	data->player_img = mlx_xpm_file_to_image(mlx,
+			"/home/oait-h-m/cursus/so_long/src/player_goku.xpm", &img_width,
+			&img_height);
+	data->coin_img = mlx_xpm_file_to_image(mlx,
+			"/home/oait-h-m/cursus/so_long/src/test_coin.xpm", &img_width,
+			&img_height);
+	data->empty_space_img = mlx_xpm_file_to_image(mlx,
+			"/home/oait-h-m/cursus/so_long/src/empty_space_black.xpm",
+			&img_width, &img_height);
+	data->door_img = mlx_xpm_file_to_image(mlx,
+			"/home/oait-h-m/cursus/so_long/src/door.xpm", &img_width,
+			&img_height);
+}
 
-	mmap.col = 0;
-	mmap.row = 0;
-
-	if (ac != 2)
-		exit(1);
-	
-	mlx = mlx_init();
-	win = mlx_new_window(mlx, 2920, 1480, "SO_LONG");
-
-	data.wall_img = mlx_xpm_file_to_image(mlx, "/home/oait-h-m/cursus/so_long/src/wall.xpm", &img_width, &img_height);
-	data.player_img = mlx_xpm_file_to_image(mlx, "/home/oait-h-m/cursus/so_long/src/Char_3.xpm", &img_width, &img_height);
-	data.coin_img = mlx_xpm_file_to_image(mlx, "/home/oait-h-m/cursus/so_long/src/coin1.xpm", &img_width, &img_height);
-	data.empty_space_img = mlx_xpm_file_to_image(mlx, "/home/oait-h-m/cursus/so_long/src/emty_space.xpm", &img_width, &img_height);
-	data.coin_img = mlx_xpm_file_to_image(mlx, "/home/oait-h-m/cursus/so_long/src/coin1.xpm", &img_width, &img_height);
-
-	char **map = fun(mmap, av);
-	int i = 0, j;
+void	put_images_to_window(char **map, void *mlx, void *win, t_data data)
+{
+	int i, (j);
+	i = 0;
 	while (map[i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
 			if (map[i][j] == '1')
-				mlx_put_image_to_window(mlx, win, data.wall_img, j * 64, i * 64);
+				mlx_put_image_to_window(mlx, win, data.wall_img, j * 64, i
+					* 64);
 			else if (map[i][j] == 'P')
-				mlx_put_image_to_window(mlx, win, data.player_img, j * 64, i * 64);
+				mlx_put_image_to_window(mlx, win, data.player_img, j * 64, i
+					* 64);
 			else if (map[i][j] == 'C')
-				mlx_put_image_to_window(mlx, win, data.coin_img, j * 64, i * 64);
+				mlx_put_image_to_window(mlx, win, data.coin_img, j * 64, i
+					* 64);
 			else if (map[i][j] == '0')
-				mlx_put_image_to_window(mlx, win, data.empty_space_img, j * 64, i * 64);
+				mlx_put_image_to_window(mlx, win, data.empty_space_img, j * 64,
+					i * 64);
+			else if (map[i][j] == 'E')
+				mlx_put_image_to_window(mlx, win, data.door_img, j * 64, i
+					* 64);
 			j++;
 		}
 		i++;
 	}
+}
+
+int	main(int ac, char **av)
+{
+	t_map	map_coordinates;
+	t_data	data;
+	void	*mlx;
+	void	*win;
+	char	**map;
+
+	mlx = NULL;
+	if (ac != 2)
+		exit(1);
+	map_coordinates.col = 0;
+	map_coordinates.row = 0;
+	mlx = mlx_init();
+	win = mlx_new_window(mlx, 1420, 1080, "SO_LONG");
+	map = check_map_is_valid(map_coordinates, av);
+	add_xpm_file_to_images(&data, mlx);
+	put_images_to_window(map, mlx, win, data);
 	mlx_loop(mlx);
 }
