@@ -12,32 +12,30 @@
 
 #include "src.h"
 
-int	is_wall_valid(char **map, int row, int col)
+int is_wall_valid(char **map, int row, int col)
 {
-	int i, (j);
+    int i, j;
 	i = 0;
 	while (map[i])
-	{
+    {
 		j = 0;
 		while (map[i][j])
-		{
-			if ((i == 0 && map[i][j] != '1' && j < col - 1) || (i == (row - 1)
-					&& map[i][j] != '1' && j < col - 1))
+        {
+            if ((i == 0 || i == row - 1) && map[i][j] != '1' && j < col - 1)
 			{
-				write(1, "Error\nInvalid Wall", 18);
+				write(2, "Error\nInvalid Wall\n", 19);
 				return (0);
 			}
-			else if ((j == 0 && map[i][j] != '1') || (j == (col - 2)
-					&& map[i][j] != '1'))
+            if ((j == 0 || j == col - 2) && map[i][j] != '1')
 			{
-				write(1, "Error\nInvalid Wall", 18);
+				write(2, "Error\nInvalid Wall\n", 19);
 				return (0);
 			}
 			j++;
-		}
+        }
 		i++;
-	}
-	return (1);
+    }
+    return (1);
 }
 
 int	is_coin_valid(char **map)
@@ -57,7 +55,7 @@ int	is_coin_valid(char **map)
 		i++;
 	}
 	if (coins == 0)
-		write(1, "Error\nInvalid Coins.", 20);
+		write(1, "Error\nInvalid Coins.\n", 21);
 	return (coins);
 }
 
@@ -78,11 +76,11 @@ int	is_exit_valid(char **map)
 		i++;
 	}
 	if (exit > 1)
-		write(1, "Error\nTo many doors.", 20);
+		write(1, "Error\nToo many doors.\n", 22);
 	else if (exit == 0)
-		write(1, "Error\nNo doors.", 15);
+		write(1, "Error\nNo doors.\n", 16);
 	if (exit != 1)
-		return 0;
+		return (0);
 	return (exit);
 }
 
@@ -103,11 +101,11 @@ int	is_player_valid(char **map)
 		i++;
 	}
 	if (player > 1)
-		write(1, "Error\nTo many players.", 22);
+		write(1, "Error\nToo many players.\n", 24);
 	else if (player == 0)
-		write(1, "Error\nNo players.", 17);
+		write(1, "Error\nNo players.\n", 18);
 	if (player != 1)
-		return 0;
+		return (0);
 	return (player);
 }
 
