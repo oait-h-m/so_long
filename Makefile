@@ -12,7 +12,8 @@
 
 NAME = so_long
 CC = cc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror -g 
+#-fsanitize=address
 
 SRC = get_next_line/get_next_line.c get_next_line/get_next_line_utils.c libft/ft_strcmp.c src/help_fun.c src/read_copy_map.c src/is_map_valid.c src/count_map.c src/main.c
 
