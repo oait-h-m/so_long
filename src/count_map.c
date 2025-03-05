@@ -41,7 +41,7 @@ int	count_line(char *file_d, int *len)
 		}
 		if (count_char(s, *len) == -1)
 		{
-			write(1, "Error\nMap is a rectangle\n", 23);
+			printf("Error\nMap is a rectangle\n");
 			exit(1);
 		}
 		free(s);
