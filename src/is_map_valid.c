@@ -23,12 +23,12 @@ int is_wall_valid(char **map, int row, int col)
         {
             if ((i == 0 || i == row - 1) && map[i][j] != '1' && j < col - 1)
 			{
-				write(2, "Error\nInvalid Wall\n", 19);
+				printf("Error\nInvalid Wall\n");
 				return (0);
 			}
             if ((j == 0 || j == col - 2) && map[i][j] != '1')
 			{
-				write(2, "Error\nInvalid Wall\n", 19);
+				printf("Error\nInvalid Wall\n");
 				return (0);
 			}
 			j++;
@@ -55,7 +55,7 @@ int	is_coin_valid(char **map)
 		i++;
 	}
 	if (coins == 0)
-		write(1, "Error\nInvalid Coins.\n", 21);
+		printf("Error\nInvalid Coins.\n");
 	return (coins);
 }
 
@@ -76,9 +76,9 @@ int	is_exit_valid(char **map)
 		i++;
 	}
 	if (exit > 1)
-		write(1, "Error\nToo many doors.\n", 22);
+		printf("Error\nToo many doors.\n");
 	else if (exit == 0)
-		write(1, "Error\nNo doors.\n", 16);
+		printf("Error\nNo doors.\n");
 	if (exit != 1)
 		return (0);
 	return (exit);
@@ -101,9 +101,9 @@ int	is_player_valid(char **map)
 		i++;
 	}
 	if (player > 1)
-		write(1, "Error\nToo many players.\n", 24);
+		printf("Error\nToo many players.\n");
 	else if (player == 0)
-		write(1, "Error\nNo players.\n", 18);
+		printf("Error\nNo players.\n");
 	if (player != 1)
 		return (0);
 	return (player);
