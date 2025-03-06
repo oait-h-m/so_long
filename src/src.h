@@ -24,27 +24,22 @@
 # include <unistd.h>
 
 
-typedef struct s_img
-{
-	void		*wall;
-	void		*player;
-	void		*coin;
-	void		*empty_space;
-	void		*door;
-}				t_images;
-
 typedef struct s_data
 {
 	char		**map;
 	void		*win;
 	void		*mlx;
-	int			row;
-	int			columns;
-	int			pos_player_row;
-	int			pos_player_col;
+	void		*wall;
+	void		*coin;
+	void		*door;
+	void		*empty_space;
+	void		*player;
+	int			pos_p_row;
+	int			pos_p_col;
+	int			len_row;
+	int			len_col;
 	int			coins_collected;
 	int			total_coins;
-	t_images	*imgs;
 }				t_data;
 
 void			free_map(char **map);
@@ -59,18 +54,11 @@ int				is_exit_valid(char **map);
 int				is_player_valid(char **map);
 int				is_map_valid(char **map, int row, int col, char *av);
 
-void			flood_fill(char **map, int x, int y);
 char			**map_copy(char **map, int rows);
+char			**add_map_to_double_array(char **map, int fd, int row, int col);
+void			ft_flood_fill(char **map, int x, int y);
 void			find_player(char **map, int *rows, int *columns);
 int				check_map_after_flood_fill(char **map);
-char			**add_map_to_double_array(char **map, int fd, int row, int col);
 
-
-void	draw_player_and_space(t_data *data);
-void	draw_door(t_data *data, int y, int x);
-void	draw_empty_space(t_data *data, int y, int x);
-void	draw_coin(t_data *data, int y, int x);
-void	draw_wall(t_data *data, int y, int x);
-void	draw_player(t_data *data, int y, int x);
 
 #endif
