@@ -17,7 +17,7 @@ int	count_char(char *s, int len)
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] && s[i] != '\n')
 		i++;
 	if (i != len)
 		return (-1);
@@ -36,12 +36,12 @@ int	count_line(char *file_d, int *len)
 	{
 		if (one_time)
 		{
-			*len = ft_strlen(s);
+			*len = count_line(s, len);
 			one_time = 0;
 		}
 		if (count_char(s, *len) == -1)
 		{
-			write(2, "Error Invalid map\n", 18);
+			write(2, "Error\nInvalid map\n", 18);
 			exit(1);
 		}
 		free(s);
@@ -50,4 +50,25 @@ int	count_line(char *file_d, int *len)
 	}
 	close(fd);
 	return (count);
+}
+
+void	count_coins(t_data *data)
+{
+	int	i, (j), (coins);
+
+	i = 0;
+	coins = 0;
+	data->coins_collected = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'C')
+				coins++;
+			j++;
+		}
+		i++;
+	}
+	data->total_coins = coins;
 }
