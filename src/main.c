@@ -57,7 +57,7 @@ void	add_xpm_file_to_images(t_data *data)
 			"/home/oait-h-m/imgs/wall.xpm", &img_width,
 			&img_height);
 	data->player = mlx_xpm_file_to_image(data->mlx,
-			"/home/oait-h-m/imgs/player_goku.xpm", &img_width,
+			"/home/oait-h-m/imgs/player2.xpm", &img_width,
 			&img_height);
 	data->coin = mlx_xpm_file_to_image(data->mlx,
 			"/home/oait-h-m/imgs/test_coin.xpm", &img_width,
@@ -124,10 +124,8 @@ void	draw_player_and_space(t_data *data)
 void move_player(t_data *data, int new_row, int new_col)
 {
     if (data->map[new_row][new_col] == '1')
-	{
         return ; 
-	}
-	else if (data->map[new_row][new_col] == 'E')
+	else if (data->map[new_row][new_col] == 'C')
 		data->coins_collected++;
 	else if (data->map[new_row][new_col] == 'E' && data->total_coins == data->coins_collected)
 	{
@@ -135,6 +133,8 @@ void move_player(t_data *data, int new_row, int new_col)
 		free_mlx(data);
 		exit(0);
 	}
+	if (data->map[new_row][new_col] == 'E' && data->total_coins != data->coins_collected)
+		return;
     data->map[data->pos_p_row][data->pos_p_col] = '0'; 
     data->map[new_row][new_col] = 'P'; 
     data->pos_p_row = new_row;
@@ -178,14 +178,16 @@ int	main(int ac, char **av)
 	data.len_row = 0;	
 	data.map = check_map_is_valid(&data, av);
 	find_player(data.map, &data.pos_p_row, &data.pos_p_col);
+	count_coins(&data);
 
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, (data.len_col - 1) * 64, data.len_row * 64, "SO_LONG");
 
 	add_xpm_file_to_images(&data);
-
 	put_images_to_window(&data);
 
 	mlx_key_hook(data.win, handle_keys, &data);
+	mlx_hook(data.win, 17, 0, close_win, &data);
+
 	mlx_loop(data.mlx);
 }
