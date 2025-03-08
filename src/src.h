@@ -13,7 +13,7 @@
 #ifndef SRC_H
 # define SRC_H
 
-# include "../get_next_line/get_next_line.h"
+# include "../gnl/get_next_line.h"
 # include "../libft/libft.h"
 # include <X11/keysym.h>
 # include <fcntl.h>
@@ -43,7 +43,6 @@ typedef struct s_data
 }				t_data;
 
 void			free_map(char **map);
-int				count_char(char *s, int len);
 int				count_line(char *file_d, int *len);
 char			**add_map_to_string(int row, int col, char *file_d);
 int				check_name_of_arg(char *av);
@@ -60,5 +59,8 @@ void			ft_flood_fill(char **map, int x, int y);
 void			find_player(char **map, int *rows, int *columns);
 int				check_map_after_flood_fill(char **map);
 
+void			count_coins(t_data *data);
+int				count_line_without_new_line(char *s);
+int				is_map_rectangle(char **map);
 
 #endif
