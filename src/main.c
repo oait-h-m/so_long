@@ -18,6 +18,11 @@ char	**check_map_is_valid(t_data *map_coordinates, char **av)
 
 	map_coordinates->len_row = count_line(av[1], &map_coordinates->len_col);
 	map = add_map_to_string(map_coordinates->len_row, map_coordinates->len_col, av[1]);
+	if (!map)
+	{
+		free_map(map);
+		exit(1);
+	}
 	if (!is_map_valid(map, map_coordinates->len_row, map_coordinates->len_col, av[1]))
 	{
 		write(2, "Error\nInvalid map.\n", 19); 
@@ -101,33 +106,17 @@ void	put_images_to_window(t_data *data)
 	}
 }
 
-void	draw_player_and_space(t_data *data)
-{
-	int	i, (j);
-	
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if (data->map[i][j] == 'P')
-				put_images_to_window(data);
-			else if (data->map[i][j] == '0')
-				put_images_to_window(data);
-			j++;
-		}
-		i++;
-	}
-}
-
 void move_player(t_data *data, int new_row, int new_col)
 {
+	int old_row;
+	int	old_col;
     if (data->map[new_row][new_col] == '1')
-        return ; 
-	else if (data->map[new_row][new_col] == 'C')
+		return ; 
+	old_row = data->pos_p_row;
+    old_col = data->pos_p_col;
+	 if (data->map[new_row][new_col] == 'C')
 		data->coins_collected++;
-	else if (data->map[new_row][new_col] == 'E' && data->total_coins == data->coins_collected)
+	if (data->map[new_row][new_col] == 'E' && data->total_coins == data->coins_collected)
 	{
 		write(1, "You Won!\n", 9);
 		free_mlx(data);
@@ -135,12 +124,12 @@ void move_player(t_data *data, int new_row, int new_col)
 	}
 	if (data->map[new_row][new_col] == 'E' && data->total_coins != data->coins_collected)
 		return;
-    data->map[data->pos_p_row][data->pos_p_col] = '0'; 
+    data->map[old_row][old_col] = '0'; 
     data->map[new_row][new_col] = 'P'; 
     data->pos_p_row = new_row;
     data->pos_p_col = new_col;
-
-    draw_player_and_space(data);
+    mlx_put_image_to_window(data->mlx, data->win, data->empty_space, old_col * 60, old_row * 60);
+    mlx_put_image_to_window(data->mlx, data->win, data->player, new_col * 60, new_row * 60);
 }
 
 int handle_keys(int key, t_data *data)
