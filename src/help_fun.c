@@ -36,7 +36,7 @@ char	**add_map_to_double_array(char **map, int fd, int row, int col)
 	while (i < row)
 	{
 		j = 0;
-		map[i] = malloc(sizeof(char) * col + 1);
+		map[i] = malloc(sizeof(char) * (col + 1));
 		if (!map[i])
 		{
 			free_map(map);
