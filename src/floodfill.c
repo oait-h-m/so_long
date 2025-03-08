@@ -57,7 +57,6 @@ void	find_player(char **map, int *rows, int *columns)
 		i++;
 	}
 }
-
 void	ft_flood_fill(char **map, int x, int y)
 {
 	if (x <= 0 || y <= 0 || map[y][x] == '1' || map[y][x] == 'V')
