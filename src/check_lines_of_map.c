@@ -28,29 +28,44 @@ int	count_line(char *file_d, int *len)
 {
 	char	*s;
 
-	int fd, (count) = 0, (one_time) = 1;
+	int fd, (count) = 0;
 	fd = open(file_d, O_RDONLY);
 	*len = 0;
 	s = get_next_line(fd);
+	*len = ft_strlen(s);
 	while (s)
 	{
-		if (one_time)
-		{
-			*len = ft_strlen(s);
-			one_time = 0;
-		}
-		if (count_char(s, len) == -1)
-		{
-			free(s);
-			write(2, "Error\nInvalid map\n", 18);
-			exit(1);
-		}
 		free(s);
 		count++;
 		s = get_next_line(fd);
 	}
 	close(fd);
 	return (count);
+}
+
+int strlen_without_new_line(char *map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i] && map[i] != '\n')
+		i++;
+	return i;
+}
+
+int	is_map_rectangle(char **map)
+{
+	int	i, (len);
+
+	i = 0;
+	len = strlen_without_new_line(map[0]);
+	while (map[i])
+	{
+		if (len != strlen_without_new_line(map[i]))
+			return 0;
+		i++;
+	}
+	return 1;
 }
 
 void	count_coins(t_data *data)
