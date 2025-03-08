@@ -62,6 +62,8 @@ char	**add_map_to_string(int row, int col, char *file_d)
 	char	**map;
 
 	fd = open(file_d, O_RDONLY);
+	if (fd == -1)
+		return NULL;
 	map = malloc(sizeof(char *) * (row + 1));
 	if (!map)
 		return (NULL);
