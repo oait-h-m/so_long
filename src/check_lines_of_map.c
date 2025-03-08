@@ -12,14 +12,14 @@
 
 #include "src.h"
 
-int	count_char(char *s, int len)
+int	count_char(char *s, int *len)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (s[i])
 		i++;
-	if (i != len)
+	if (i != *len)
 		return (-1);
 	return (i);
 }
@@ -36,11 +36,12 @@ int	count_line(char *file_d, int *len)
 	{
 		if (one_time)
 		{
-			*len = count_line(s, len);
+			*len = ft_strlen(s);
 			one_time = 0;
 		}
-		if (count_char(s, *len) == -1)
+		if (count_char(s, len) == -1)
 		{
+			free(s);
 			write(2, "Error\nInvalid map\n", 18);
 			exit(1);
 		}
