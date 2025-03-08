@@ -57,10 +57,10 @@ void	add_xpm_file_to_images(t_data *data)
 			"/home/oait-h-m/imgs/wall.xpm", &img_width,
 			&img_height);
 	data->player = mlx_xpm_file_to_image(data->mlx,
-			"/home/oait-h-m/imgs/player2.xpm", &img_width,
+			"/home/oait-h-m/imgs/player222.xpm", &img_width,
 			&img_height);
 	data->coin = mlx_xpm_file_to_image(data->mlx,
-			"/home/oait-h-m/imgs/test_coin.xpm", &img_width,
+			"/home/oait-h-m/imgs/ball.xpm", &img_width,
 			&img_height);
 	data->empty_space = mlx_xpm_file_to_image(data->mlx,
 			"/home/oait-h-m/imgs/empty_space_black.xpm",
@@ -85,16 +85,16 @@ void	put_images_to_window(t_data *data)
 		while (data->map[i][j])
 		{
 			if (data->map[i][j] == '1')
-				mlx_put_image_to_window(data->mlx, data->win, data->wall, j * 64, i * 64);
+				mlx_put_image_to_window(data->mlx, data->win, data->wall, j * 60, i * 60);
 			else if (data->map[i][j] == 'P')
-				mlx_put_image_to_window(data->mlx, data->win, data->player, j * 64, i * 64);
+				mlx_put_image_to_window(data->mlx, data->win, data->player, j * 60, i * 60);
 			else if (data->map[i][j] == 'C')
-				mlx_put_image_to_window(data->mlx, data->win, data->coin, j * 64, i * 64);
+				mlx_put_image_to_window(data->mlx, data->win, data->coin, j * 60, i * 60);
 			else if (data->map[i][j] == '0')
-				mlx_put_image_to_window(data->mlx, data->win, data->empty_space, j * 64, i
-					* 64);
+				mlx_put_image_to_window(data->mlx, data->win, data->empty_space, j * 60, i
+					* 60);
 			else if (data->map[i][j] == 'E')
-				mlx_put_image_to_window(data->mlx, data->win, data->door, j * 64, i * 64);
+				mlx_put_image_to_window(data->mlx, data->win, data->door, j * 60, i * 60);
 			j++;
 		}
 		i++;
@@ -181,7 +181,7 @@ int	main(int ac, char **av)
 	count_coins(&data);
 
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, (data.len_col - 1) * 64, data.len_row * 64, "SO_LONG");
+	data.win = mlx_new_window(data.mlx, (data.len_col - 1) * 60, data.len_row * 60, "SO_LONG");
 
 	add_xpm_file_to_images(&data);
 	put_images_to_window(&data);
