@@ -17,7 +17,7 @@
 #  define BUFFER_SIZE 42
 # endif
 
-# include "get_next_line/get_next_line.h"
+# include "gnl/get_next_line.h"
 # include "libft/libft.h"
 # include "src/src.h"
 
