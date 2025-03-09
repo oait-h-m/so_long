@@ -43,35 +43,36 @@ int	count_line(char *file_d, int *len)
 	return (count);
 }
 
-int strlen_without_new_line(char *map)
+int	strlen_without_new_line(char *map)
 {
 	int	i;
 
 	i = 0;
 	while (map[i] && map[i] != '\n')
 		i++;
-	return i;
+	return (i);
 }
 
 int	is_map_rectangle(char **map)
 {
-	int	i, (len);
-
+	int i, (len);
 	i = 0;
 	len = strlen_without_new_line(map[0]);
 	while (map[i])
 	{
 		if (len != strlen_without_new_line(map[i]))
-			return 0;
+		{
+			ft_putstr_fd("Error\nMap is not rectangle\n", 2);
+			exit(1);
+		}
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 void	count_coins(t_data *data)
 {
-	int	i, (j), (coins);
-
+	int i, (j), (coins);
 	i = 0;
 	coins = 0;
 	data->coins_collected = 0;
