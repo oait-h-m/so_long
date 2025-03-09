@@ -14,7 +14,7 @@ NAME = so_long
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g 
 
-SRC = gnl/get_next_line.c gnl/get_next_line_utils.c libft/ft_strcmp.c src/help_fun.c src/floodfill.c src/is_map_valid.c src/check_lines_of_map.c src/main.c
+SRC = gnl/get_next_line.c gnl/get_next_line_utils.c libft/ft_putstr_fd.c libft/ft_putnbr.c libft/ft_strcmp.c src/help_fun.c src/floodfill.c src/is_map_valid.c src/check_lines_of_map.c src/handle_keys.c src/put_imgs.c src/move_player.c src/so_long.c
 
 
 OBJ = $(SRC:.c=.o)
