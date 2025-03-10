@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oait-h-m <oait-h-m@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 02:57:59 by oait-h-m          #+#    #+#             */
-/*   Updated: 2025/02/28 04:40:17 by oait-h-m         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:17:36 by oait-h-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ char	**map_copy(char **map, int rows)
 	return (cpy_map);
 }
 
-void	find_player(char **map, int *rows, int *columns)
+int	find_player(char **map, int *rows, int *columns)
 {
 	if (!map)
-		return ;
+		return (0);
 	int i, (j);
 	i = 0;
 	while (map[i])
@@ -50,17 +50,24 @@ void	find_player(char **map, int *rows, int *columns)
 			{
 				*rows = i;
 				*columns = j;
-				return ;
+				return (1);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
+
 void	ft_flood_fill(char **map, int x, int y)
 {
 	if (x <= 0 || y <= 0 || map[y][x] == '1' || map[y][x] == 'V')
 		return ;
+	if (map[y][x] == 'E')
+	{
+		map[y][x] = '1';
+		return ;
+	}
 	map[y][x] = 'V';
 	ft_flood_fill(map, x + 1, y);
 	ft_flood_fill(map, x - 1, y);
