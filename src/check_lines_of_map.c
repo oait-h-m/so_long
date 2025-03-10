@@ -53,7 +53,7 @@ int	strlen_without_new_line(char *map)
 	return (i);
 }
 
-int	is_map_rectangle(char **map)
+void	is_map_rectangle(char **map)
 {
 	int i, (len);
 	i = 0;
@@ -62,12 +62,12 @@ int	is_map_rectangle(char **map)
 	{
 		if (len != strlen_without_new_line(map[i]))
 		{
-			ft_putstr_fd("Error\nMap is not rectangle\n", 2);
+			ft_putstr_fd("Error\nInvalid map\n", 2);
+			free_map(map);
 			exit(1);
 		}
 		i++;
 	}
-	return (1);
 }
 
 void	count_coins(t_data *data)
