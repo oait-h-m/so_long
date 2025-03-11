@@ -12,32 +12,35 @@
 
 #include "src.h"
 
-int is_wall_valid(char **map, int row, int col)
+int	is_wall_valid(char **map, int row, int col)
 {
-    int i, j;
+	int i, (j), (invalid);
 	i = 0;
+	invalid = 0;
 	while (map[i])
-    {
+	{
 		j = 0;
 		while (map[i][j])
-        {
+		{
 			if (map[i][j] != '1' && map[i][j] != '0' && map[i][j] != '\n')
 			{
 				if (map[i][j] != 'P' && map[i][j] != 'E' && map[i][j] != 'C')
-					return (0);
+					invalid++;
 			}
-            if ((i == 0 || i == row - 1) && map[i][j] != '1' && j < col - 1)
-				return (0);
-            if ((j == 0 || j == col - 2) && map[i][j] != '1')
-				return (0);
+			if ((i == 0 || i == row - 1) && map[i][j] != '1' && j < col - 1)
+				invalid++;
+			if ((j == 0 || j == col - 2) && map[i][j] != '1')
+				invalid++;
 			j++;
-        }
+		}
 		i++;
-    }
-    return (1);
+	}
+	if (invalid)
+		return (0);
+	return (1);
 }
 
-int	is_coin_valid(char **map)
+void	is_coin_valid(char **map)
 {
 	int i, (j), (coins);
 	coins = 0;
@@ -55,16 +58,16 @@ int	is_coin_valid(char **map)
 	}
 	if (coins == 0)
 	{
-		write(2, "Error\nNo coins.\n", 16);
+		ft_putstr_fd("Error\nNo coins.\n", 2);
+		free_map(map);
 		exit(1);
 	}
-	return (coins);
 }
 
-int	is_exit_valid(char **map)
+void	is_exit_valid(char **map)
 {
-	int i, (j), (exit);
-	exit = 0;
+	int i, (j), (door);
+	door = 0;
 	i = 0;
 	while (map[i])
 	{
@@ -72,21 +75,20 @@ int	is_exit_valid(char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'E')
-				exit++;
+				door++;
 			j++;
 		}
 		i++;
 	}
-	if (exit > 1)
-		write(2, "Error Too many doors.\n", 22);
-	else if (exit == 0)
-		write(2, "Error No doors.\n", 16);
-	if (exit != 1)
-		return (0);
-	return (exit);
+	if (door != 1)
+	{
+		ft_putstr_fd("Error\nNo door or too many doors.\n", 2);
+		free_map(map);
+		exit(1);
+	}
 }
 
-int	is_player_valid(char **map)
+void	is_player_valid(char **map)
 {
 	int i, (j), (player);
 	player = 0;
@@ -102,32 +104,25 @@ int	is_player_valid(char **map)
 		}
 		i++;
 	}
-	if (player > 1)
-		write(2, "Error\nToo many players.\n", 24);
-	else if (player == 0)
-		write(2, "Error\nNo players.\n", 18);
 	if (player != 1)
-		return (0);
-	return (player);
+	{
+		ft_putstr_fd("Error\n No player or too many players.\n", 2);
+		free_map(map);
+		exit(1);
+	}
 }
 
-int	is_map_valid(char **map, int row, int col, char *av)
+int	is_map_valid(char **map, int row, int col)
 {
 	char	**cpy_map;
 
 	int x, (y);
-	x = 0;
-	y = 0;
-	if (!check_name_of_arg(av))
+	if (!is_wall_valid(map, row, col))
 		return (0);
-	else if (!is_wall_valid(map, row, col))
-		return (0);
-	else if (!is_coin_valid(map))
-		exit(1);
-	else if (!is_exit_valid(map))
-		exit(1);
-	else if (!is_player_valid(map))
-		exit(1);
+	is_map_rectangle(map);
+	is_coin_valid(map);
+	is_exit_valid(map);
+	is_player_valid(map);
 	find_player(map, &x, &y);
 	cpy_map = map_copy(map, row);
 	ft_flood_fill(cpy_map, y, x);
@@ -137,5 +132,6 @@ int	is_map_valid(char **map, int row, int col, char *av)
 		return (0);
 	}
 	free_map(cpy_map);
+	cpy_map = NULL;
 	return (1);
 }
