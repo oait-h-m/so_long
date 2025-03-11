@@ -63,7 +63,10 @@ char	**add_map_to_string(int row, int col, char *file_d)
 
 	fd = open(file_d, O_RDONLY);
 	if (fd == -1)
-		return NULL;
+	{
+		ft_putstr_fd("Error\nInvalid map.\n", 2);
+		return (NULL);
+	}
 	map = malloc(sizeof(char *) * (row + 1));
 	if (!map)
 		return (NULL);
@@ -71,13 +74,18 @@ char	**add_map_to_string(int row, int col, char *file_d)
 	return (map);
 }
 
-int	check_name_of_arg(char *av)
+void	check_name_of_arg(char *av)
 {
 	if (ft_strlen(av) < 4)
-		return (0);
-	while (*av != '.')
+	{
+		ft_putstr_fd("Error\nInvalid map.\n", 2);
+		exit(1);
+	}
+	while (*av != '\0' && *av != '.')
 		av++;
 	if (ft_strcmp(av, ".ber") != 0)
-		return (0);
-	return (1);
+	{
+		ft_putstr_fd("Error\nInvalid map.\n", 2);
+		exit(1);
+	}
 }
